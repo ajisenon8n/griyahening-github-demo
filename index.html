@@ -1,0 +1,538 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Griya Hening</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: asymmetric hero with ripple rings; service list as ruled rows; real sequence for the process; one interactive self-check; booking form at the end. */
+:root {
+  --bg: #EDF1EE;
+  --surface: #F8FAF8;
+  --fg: #14292A;
+  --muted: #4A6160;
+  --line: #C9D6D1;
+  --brand: #1F4D4A;
+  --on-brand: #F8FAF8;
+  --accent: #A8610F;
+  --accent-soft: #F1E0C4;
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1C1D;
+    --surface: #152829;
+    --fg: #E6EEEA;
+    --muted: #9FB5B0;
+    --line: #29403F;
+    --brand: #7FC4B8;
+    --on-brand: #0E1C1D;
+    --accent: #E0A24E;
+    --accent-soft: #3A2C14;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1C1D;
+  --surface: #152829;
+  --fg: #E6EEEA;
+  --muted: #9FB5B0;
+  --line: #29403F;
+  --brand: #7FC4B8;
+  --on-brand: #0E1C1D;
+  --accent: #E0A24E;
+  --accent-soft: #3A2C14;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-inline: 20px;
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.wrap { max-width: 1080px; margin-inline: auto; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+section { padding-block: 72px 0; }
+.sec-head { display: grid; gap: 12px; max-width: 620px; margin-bottom: 32px; }
+.sec-head h2 { font-size: clamp(28px, 4.2vw, 40px); }
+.sec-head p { color: var(--muted); }
+
+/* header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 20px; }
+.brand { font-family: var(--font-display); font-size: 20px; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 26px; height: 26px; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--fg); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; font: inherit; font-weight: 600; font-size: 15px; padding: 12px 22px; border-radius: 999px; border: 1.5px solid var(--brand); background: var(--brand); color: var(--on-brand); cursor: pointer; text-decoration: none; }
+.btn:hover { filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--brand); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; align-items: center; padding-block: 40px 0; }
+.hero h1 { font-size: clamp(36px, 6vw, 62px); margin-block: 14px 20px; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lead { color: var(--muted); font-size: 18px; max-width: 520px; }
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.rings { position: relative; aspect-ratio: 1; max-width: 100%; display: grid; place-items: center; }
+.rings span { position: absolute; border-radius: 50%; border: 1px solid var(--line); inset: 0; }
+.rings span:nth-child(2) { inset: 11%; }
+.rings span:nth-child(3) { inset: 22%; border-color: var(--brand); opacity: .45; }
+.rings span:nth-child(4) { inset: 33%; background: var(--accent-soft); border-color: transparent; }
+.hours { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; width: min(78%, 280px); font-size: 14px; }
+.hours h3 { font-family: var(--font-body); font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.hours dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-variant-numeric: tabular-nums; }
+.hours dt { color: var(--muted); }
+.hours dd { margin: 0; text-align: right; }
+@media (prefers-reduced-motion: no-preference) {
+  .rings span:nth-child(3) { animation: breathe 8s ease-in-out infinite; }
+  @keyframes breathe { 50% { transform: scale(1.05); opacity: .7; } }
+}
+
+/* services */
+.svc { border-top: 1px solid var(--line); }
+.svc-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) minmax(0, .8fr); gap: 8px 32px; padding-block: 24px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.svc-row h3 { font-size: 22px; }
+.svc-row p { color: var(--muted); }
+.svc-meta { font-variant-numeric: tabular-nums; font-size: 14px; display: grid; gap: 2px; }
+.svc-meta strong { font-size: 17px; font-weight: 600; }
+.svc-meta span { color: var(--muted); }
+
+/* process */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: step; }
+.steps li { counter-increment: step; border-top: 2px solid var(--brand); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
+.steps li::before { content: "Tahap " counter(step); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.steps h3 { font-size: 20px; }
+.steps p { color: var(--muted); font-size: 15px; }
+
+/* practitioners */
+.team { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.person { display: grid; gap: 12px; align-content: start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-family: var(--font-display); font-size: 20px; }
+.person h3 { font-size: 20px; }
+.person .role { font-size: 14px; color: var(--accent); font-weight: 600; }
+.person p { color: var(--muted); font-size: 15px; }
+
+/* self-check */
+.check { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+.check h2 { font-size: clamp(26px, 3.6vw, 34px); margin-block: 10px 12px; }
+.check .intro p { color: var(--muted); }
+.sliders { display: grid; gap: 22px; align-content: start; }
+.slider label { display: flex; justify-content: space-between; gap: 12px; font-weight: 500; margin-bottom: 6px; }
+.slider output { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 600; }
+.slider small { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin-top: 2px; }
+input[type="range"] { width: 100%; accent-color: var(--brand); }
+.result { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 6px; }
+.result h3 { font-size: 22px; }
+.result p { color: var(--muted); max-width: 640px; }
+.result a { color: var(--accent); font-weight: 600; }
+
+/* testimonials */
+.quotes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.quotes blockquote { margin: 0; display: grid; gap: 14px; align-content: start; }
+.quotes blockquote p { font-family: var(--font-display); font-size: 19px; line-height: 1.4; }
+.quotes cite { font-style: normal; font-size: 14px; color: var(--muted); }
+.note { font-size: 13px; color: var(--muted); margin-top: 24px; }
+
+/* faq */
+.faq { border-top: 1px solid var(--line); max-width: 760px; }
+.faq details { border-bottom: 1px solid var(--line); padding-block: 16px; }
+.faq summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { color: var(--muted); margin-top: 10px; max-width: 640px; }
+
+/* booking */
+.book { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; }
+.book .contact { display: grid; gap: 14px; align-content: start; color: var(--muted); }
+.book .contact strong { color: var(--fg); display: block; }
+form { display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .field legend { font-size: 14px; font-weight: 600; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+input[type="text"], input[type="date"], select, textarea {
+  font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; min-width: 0;
+}
+textarea { min-height: 90px; resize: vertical; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.chips label { font-weight: 500; display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 14px; }
+.chips input { accent-color: var(--brand); }
+.confirm { background: var(--accent-soft); border-radius: 12px; padding: 14px 16px; font-size: 15px; }
+
+footer { margin-top: 80px; border-top: 1px solid var(--line); padding-block: 28px 40px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+footer p { max-width: 560px; }
+
+@media (max-width: 860px) {
+  .hero, .check, .book { grid-template-columns: minmax(0, 1fr); }
+  .hero { gap: 32px; }
+  .rings { max-width: 360px; }
+  .steps, .team, .quotes { grid-template-columns: minmax(0, 1fr); }
+  .svc-row { grid-template-columns: minmax(0, 1fr); }
+  .check { padding: 22px; }
+  section { padding-block-start: 56px; }
+}
+@media (max-width: 480px) {
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  form { padding: 20px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#atas" id="atas">
+      <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="16" cy="16" r="14" stroke="var(--line)"/><circle cx="16" cy="16" r="9" stroke="var(--brand)"/><circle cx="16" cy="16" r="4" fill="var(--accent)" stroke="none"/></svg>
+      Griya Hening
+    </a>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="#layanan">Layanan</a>
+      <a href="#proses">Proses</a>
+      <a href="#praktisi">Praktisi</a>
+      <a href="#cek">Cek diri</a>
+      <a href="#faq">Tanya jawab</a>
+      <a href="#janji">Buat janji</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Klinik konsultasi spiritual · Bandung</p>
+        <h1>Ruang tenang untuk <em>mendengarkan</em> diri sendiri.</h1>
+        <p class="lead">Griya Hening mendampingi Anda yang sedang bingung mengambil keputusan, lelah batin, atau kehilangan arah. Kami mendengarkan dulu, lalu menemani Anda menemukan langkah berikutnya, sesuai keyakinan yang Anda pegang.</p>
+        <div class="cta-row">
+          <a class="btn" href="#janji">Buat janji temu</a>
+          <a class="btn ghost" href="#cek">Cek keseimbangan diri</a>
+        </div>
+      </div>
+      <div class="rings" aria-hidden="false">
+        <span></span><span></span><span></span><span></span>
+        <div class="hours">
+          <h3>Jam praktik</h3>
+          <dl>
+            <dt>Senin – Jumat</dt><dd>09.00 – 19.00</dd>
+            <dt>Sabtu</dt><dd>09.00 – 15.00</dd>
+            <dt>Minggu</dt><dd>Tutup</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <section id="layanan">
+      <div class="sec-head">
+        <p class="eyebrow">Layanan</p>
+        <h2>Empat jenis pendampingan, dari sekali bertemu sampai berkelanjutan</h2>
+        <p>Semua sesi berlangsung tatap muka di griya atau lewat video. Tarif di bawah adalah contoh.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-row">
+          <h3>Konsultasi Batin</h3>
+          <p>Percakapan satu lawan satu untuk memilah beban pikiran, kebimbangan, dan pertanyaan hidup. Cocok untuk kunjungan pertama.</p>
+          <div class="svc-meta"><strong>Rp 250.000</strong><span>60 menit</span></div>
+        </div>
+        <div class="svc-row">
+          <h3>Meditasi Terbimbing</h3>
+          <p>Latihan pernapasan dan keheningan bersama pendamping, dengan panduan yang disesuaikan untuk pemula.</p>
+          <div class="svc-meta"><strong>Rp 180.000</strong><span>45 menit</span></div>
+        </div>
+        <div class="svc-row">
+          <h3>Pendampingan Duka</h3>
+          <p>Ruang aman untuk Anda yang baru kehilangan orang tersayang, pekerjaan, atau hubungan. Dilakukan dalam beberapa pertemuan.</p>
+          <div class="svc-meta"><strong>Rp 1.100.000</strong><span>5 sesi × 50 menit</span></div>
+        </div>
+        <div class="svc-row">
+          <h3>Pendampingan Doa dan Muhasabah</h3>
+          <p>Refleksi diri dan doa bersama, mengikuti tradisi iman Anda. Praktisi menyesuaikan dengan agama atau kepercayaan yang Anda anut.</p>
+          <div class="svc-meta"><strong>Rp 300.000</strong><span>75 menit</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proses">
+      <div class="sec-head">
+        <p class="eyebrow">Proses konsultasi</p>
+        <h2>Apa yang terjadi sejak Anda mendaftar</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Mendaftar</h3>
+          <p>Isi formulir singkat. Kami menghubungi Anda dalam satu hari kerja untuk memastikan jadwal.</p>
+        </li>
+        <li>
+          <h3>Sesi pertama</h3>
+          <p>Praktisi mendengarkan tanpa menilai. Anda menentukan seberapa dalam ingin bercerita.</p>
+        </li>
+        <li>
+          <h3>Rencana langkah</h3>
+          <p>Bersama praktisi, Anda menyusun latihan kecil yang bisa dijalankan di rumah, misalnya jurnal atau meditasi.</p>
+        </li>
+        <li>
+          <h3>Tindak lanjut</h3>
+          <p>Anda memilih lanjut, berhenti, atau dirujuk ke psikolog atau dokter bila kami melihat itu lebih tepat.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="praktisi">
+      <div class="sec-head">
+        <p class="eyebrow">Praktisi</p>
+        <h2>Tiga pendamping dengan latar yang berbeda</h2>
+        <p>Nama dan profil di bawah adalah data contoh.</p>
+      </div>
+      <div class="team">
+        <article class="person">
+          <div class="avatar" aria-hidden="true">SW</div>
+          <div>
+            <h3>Sekar Wening</h3>
+            <p class="role">Pendamping meditasi</p>
+          </div>
+          <p>Mengajar meditasi napas dan kesadaran penuh selama 14 tahun. Banyak mendampingi pekerja kantoran yang sulit tidur dan sulit berhenti memikirkan pekerjaan.</p>
+        </article>
+        <article class="person">
+          <div class="avatar" aria-hidden="true">DW</div>
+          <div>
+            <h3>Dharma Wiryawan</h3>
+            <p class="role">Konselor spiritual lintas iman</p>
+          </div>
+          <p>Berpengalaman 11 tahun mendampingi orang yang mempertanyakan makna hidup, pernikahan, dan karier. Terbuka bagi semua agama dan yang belum beragama.</p>
+        </article>
+        <article class="person">
+          <div class="avatar" aria-hidden="true">NH</div>
+          <div>
+            <h3>Nur Hidayati</h3>
+            <p class="role">Pendamping doa dan duka</p>
+          </div>
+          <p>Fokus pada pendampingan kehilangan dan muhasabah. Sabar, pendengar yang baik, dan terbiasa bekerja dengan keluarga yang sedang berduka.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="cek">
+      <div class="check">
+        <div class="intro">
+          <p class="eyebrow">Cek keseimbangan diri</p>
+          <h2>Seberapa tenang Anda minggu ini?</h2>
+          <p>Geser tiga penanda di samping sesuai keadaan Anda. Hasilnya hanya saran awal untuk memilih layanan, bukan penilaian atau diagnosis.</p>
+        </div>
+        <div class="sliders">
+          <div class="slider">
+            <label for="s-pikiran">Pikiran <output id="o-pikiran" for="s-pikiran">3</output></label>
+            <input type="range" id="s-pikiran" min="1" max="5" value="3">
+            <small><span>Penuh dan riuh</span><span>Jernih</span></small>
+          </div>
+          <div class="slider">
+            <label for="s-tubuh">Tubuh dan tidur <output id="o-tubuh" for="s-tubuh">3</output></label>
+            <input type="range" id="s-tubuh" min="1" max="5" value="3">
+            <small><span>Lelah, susah tidur</span><span>Segar</span></small>
+          </div>
+          <div class="slider">
+            <label for="s-hubungan">Hubungan dan makna <output id="o-hubungan" for="s-hubungan">3</output></label>
+            <input type="range" id="s-hubungan" min="1" max="5" value="3">
+            <small><span>Terputus</span><span>Terhubung</span></small>
+          </div>
+        </div>
+        <div class="result" aria-live="polite">
+          <h3 id="r-title"></h3>
+          <p id="r-text"></p>
+          <p><a href="#janji" id="r-link">Pilih layanan ini di formulir</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimoni">
+      <div class="sec-head">
+        <p class="eyebrow">Cerita tamu</p>
+        <h2>Yang mereka ceritakan setelah beberapa sesi</h2>
+      </div>
+      <div class="quotes">
+        <blockquote>
+          <p>Saya datang dengan sepuluh pertanyaan. Pulang dengan satu yang benar-benar perlu saya jawab.</p>
+          <cite>Rina, 34, manajer proyek</cite>
+        </blockquote>
+        <blockquote>
+          <p>Tidak ada ceramah. Bu Nur cukup menemani saya menangis, dan itu sudah banyak membantu.</p>
+          <cite>Hendra, 47, pedagang</cite>
+        </blockquote>
+        <blockquote>
+          <p>Latihan napas lima menit tiap pagi mengubah cara saya menghadapi rapat yang tegang.</p>
+          <cite>Maya, 29, desainer</cite>
+        </blockquote>
+      </div>
+      <p class="note">Ketiga testimoni ini fiktif dan dibuat sebagai contoh isi halaman.</p>
+    </section>
+
+    <section id="faq">
+      <div class="sec-head">
+        <p class="eyebrow">Tanya jawab</p>
+        <h2>Hal yang sering ditanyakan sebelum datang</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Apakah saya harus beragama tertentu?</summary>
+          <p>Tidak. Praktisi menyesuaikan diri dengan keyakinan Anda, termasuk bila Anda belum yakin atau tidak beragama.</p>
+        </details>
+        <details>
+          <summary>Apakah ini pengganti psikolog atau dokter?</summary>
+          <p>Bukan. Kami tidak mendiagnosis dan tidak memberi obat. Bila Anda mengalami gejala yang berat, seperti sulit berfungsi sehari-hari atau berpikir menyakiti diri, kami akan membantu merujuk Anda ke tenaga kesehatan.</p>
+        </details>
+        <details>
+          <summary>Apakah ceritanya dijaga kerahasiaannya?</summary>
+          <p>Ya. Isi sesi tidak dibagikan kepada siapa pun tanpa izin Anda, kecuali ada ancaman keselamatan terhadap diri Anda atau orang lain.</p>
+        </details>
+        <details>
+          <summary>Bisa konsultasi lewat video?</summary>
+          <p>Bisa. Pilih "Video" di formulir. Tautan sesi kami kirim satu jam sebelum jadwal.</p>
+        </details>
+        <details>
+          <summary>Bagaimana jika saya perlu membatalkan?</summary>
+          <p>Beri kabar paling lambat 24 jam sebelum sesi agar jadwal dapat dipakai tamu lain. Anda bisa mengganti jadwal tanpa biaya.</p>
+        </details>
+      </div>
+    </section>
+
+    <section id="janji">
+      <div class="book">
+        <div>
+          <div class="sec-head">
+            <p class="eyebrow">Buat janji temu</p>
+            <h2>Mulai dengan satu langkah kecil</h2>
+            <p>Isi formulir di samping. Tim kami akan membalas dalam satu hari kerja.</p>
+          </div>
+          <div class="contact">
+            <p><strong>Griya Hening</strong>Jl. Telaga Sari No. 12, Bandung (alamat contoh)</p>
+            <p><strong>Telepon</strong>0812-0000-0000 (nomor contoh)</p>
+            <p><strong>Surel</strong>halo@griyahening.example</p>
+          </div>
+        </div>
+        <form id="form-janji" novalidate>
+          <div class="field">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" autocomplete="name" placeholder="Nama panggilan juga boleh">
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label for="layanan-pilih">Layanan</label>
+              <select id="layanan-pilih" name="layanan">
+                <option>Konsultasi Batin</option>
+                <option>Meditasi Terbimbing</option>
+                <option>Pendampingan Duka</option>
+                <option>Pendampingan Doa dan Muhasabah</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="tanggal">Tanggal yang diinginkan</label>
+              <input type="date" id="tanggal" name="tanggal">
+            </div>
+          </div>
+          <fieldset class="field">
+            <legend>Cara bertemu</legend>
+            <div class="chips">
+              <label for="cara-griya"><input type="radio" id="cara-griya" name="cara" value="di Griya Hening" checked> Di griya</label>
+              <label for="cara-video"><input type="radio" id="cara-video" name="cara" value="lewat video"> Video</label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="catatan">Yang ingin Anda sampaikan (opsional)</label>
+            <textarea id="catatan" name="catatan" placeholder="Boleh singkat saja. Detail bisa diceritakan saat sesi."></textarea>
+          </div>
+          <button class="btn" type="submit">Kirim permintaan</button>
+          <p class="confirm" id="konfirmasi" role="status" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Griya Hening adalah klinik fiktif untuk keperluan contoh halaman web. Layanan spiritual tidak menggantikan perawatan psikologis atau medis.</p>
+    <p>© 2026 Griya Hening (contoh)</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var ids = ["pikiran", "tubuh", "hubungan"];
+  var out = {
+    pikiran: {
+      layanan: "Konsultasi Batin",
+      judul: "Pikiran Anda sedang paling penuh",
+      teks: "Percakapan satu lawan satu membantu memilah apa yang benar-benar perlu diputuskan dan apa yang bisa dilepas dulu."
+    },
+    tubuh: {
+      layanan: "Meditasi Terbimbing",
+      judul: "Tubuh Anda butuh jeda lebih dulu",
+      teks: "Latihan napas dan keheningan bersama pendamping bisa menjadi titik mulai, terutama bila tidur Anda terganggu."
+    },
+    hubungan: {
+      layanan: "Pendampingan Doa dan Muhasabah",
+      judul: "Anda mungkin sedang mencari makna dan keterhubungan",
+      teks: "Refleksi dan doa bersama, sesuai keyakinan Anda, dapat membantu menemukan kembali pegangan. Bila ada kehilangan, Pendampingan Duka juga tersedia."
+    },
+    tenang: {
+      layanan: "Konsultasi Batin",
+      judul: "Keadaan Anda cukup seimbang",
+      teks: "Anda bisa memakai sesi untuk menjaga kebiasaan baik atau menjawab pertanyaan hidup yang tidak mendesak."
+    }
+  };
+  var elTitle = document.getElementById("r-title");
+  var elText = document.getElementById("r-text");
+  var elLink = document.getElementById("r-link");
+  var select = document.getElementById("layanan-pilih");
+
+  function update() {
+    var vals = {};
+    var lowest = null;
+    ids.forEach(function (k) {
+      var v = Number(document.getElementById("s-" + k).value);
+      vals[k] = v;
+      document.getElementById("o-" + k).textContent = v;
+      if (lowest === null || v < vals[lowest]) lowest = k;
+    });
+    var key = vals[lowest] >= 4 ? "tenang" : lowest;
+    var r = out[key];
+    elTitle.textContent = r.judul;
+    elText.textContent = r.teks + " Saran layanan: " + r.layanan + ".";
+    elLink.setAttribute("data-layanan", r.layanan);
+  }
+  ids.forEach(function (k) {
+    document.getElementById("s-" + k).addEventListener("input", update);
+  });
+  elLink.addEventListener("click", function () {
+    var l = elLink.getAttribute("data-layanan");
+    for (var i = 0; i < select.options.length; i++) {
+      if (select.options[i].text === l) select.selectedIndex = i;
+    }
+  });
+  update();
+
+  var tgl = document.getElementById("tanggal");
+  var d = new Date();
+  d.setDate(d.getDate() + 1);
+  var iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  tgl.min = iso;
+  tgl.value = iso;
+
+  document.getElementById("form-janji").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var nama = document.getElementById("nama").value.trim() || "Tamu";
+    var cara = document.querySelector('input[name="cara"]:checked').value;
+    var box = document.getElementById("konfirmasi");
+    box.textContent = "Terima kasih, " + nama + ". Ini halaman contoh, jadi permintaan untuk " + select.value + " " + cara + " pada " + tgl.value + " tidak dikirim ke mana pun.";
+    box.hidden = false;
+  });
+})();
+</script>
+
+</body></html>
